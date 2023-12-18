@@ -58,6 +58,7 @@ public class AccountDAO {
 	
 	public void loadAccountData(String data) {
 		if(data.isEmpty()) return;
+		accList.clear();
 		String[] arr = data.split("\n");
 		
 		for(int i =0; i<arr.length; i++) {
