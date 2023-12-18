@@ -1,27 +1,25 @@
 package ATM;
 
 public class Bankcontroller {
-	final String BANKNAME = "우리은행";
-	AccountDAO accDAO;
-	ClientDAO cliDAO;
-	Util util;
-	String log;
+	private final String BANKNAME = "우리은행";
+	private AccountDAO accDAO;
+	private ClientDAO cliDAO;
+	private String log;
 	
-	void init() {
+	private void init() {
 		accDAO = new AccountDAO();
 		cliDAO = new ClientDAO();
-		util = new Util();
 	}
 	
-	Bankcontroller(){
+	public Bankcontroller(){
 		init();
 		run();
 	}
 	
-	void run(){
+	private void run(){
 		while(true) {
 			mainMenuPrint();
-			int sel = util.getValue("메뉴 선택 : ", 0, 2,"입력오류");
+			int sel = Util.getValue("메뉴 선택 : ", 0, 2,"입력오류");
 			if(sel==0) break;
 			if(sel==1) {
 				managerRun();
@@ -30,18 +28,18 @@ public class Bankcontroller {
 			}
 		}
 	}
-	void mainMenuPrint() {
+	private void mainMenuPrint() {
 		System.out.println("==[ "+BANKNAME+" ]==");
 		System.out.println("[1] 관리자");
 		System.out.println("[2] 사용자");
 		System.out.println("[0] 종료");
 	}
 	
-	void managerRun() {
+	private void managerRun() {
 		while(true) {
 			System.out.println("==[ "+BANKNAME+" 관리자 ]==");
 			managerMenuPrint();
-			int sel = util.getValue("메뉴 선택 : ", 0, 6,"입력오류");
+			int sel = Util.getValue("메뉴 선택 : ", 0, 6,"입력오류");
 			if(sel==0) return;	
 			if(sel==1) {
 				cliDAO.clientListPrint();
@@ -50,15 +48,15 @@ public class Bankcontroller {
 			} else if(sel==3) {
 				cliDAO.deleteManager(accDAO);
 			} else if(sel==4) {
-				util.saveData(accDAO,cliDAO);
+				Util.saveData(accDAO,cliDAO);
 			} else if(sel==5) {
-				util.loadFromFile(accDAO, cliDAO);				
+				Util.loadFromFile(accDAO, cliDAO);				
 			} else {
 				accDAO.printAllAcc();
 			}
 		}
 	}
-	void managerMenuPrint() {
+	private void managerMenuPrint() {
 		System.out.println("[1] 회원목록");
 		System.out.println("[2] 회원수정");//회원 아이디로 검색 비밀번호, 이름 수정가능
 		System.out.println("[3] 회원 삭제"); //회원 아이디로 검색
@@ -68,11 +66,11 @@ public class Bankcontroller {
 		System.out.println("[0] 뒤로가기");
 	}
 	
-	void clientRun() {
+	private void clientRun() {
 		while(true) {
 			System.out.println("==[ "+BANKNAME+" 사용자 ]==");
 			clientMenuPrint();
-			int sel = util.getValue("메뉴 입력 : ", 0, 2,"입력오류");
+			int sel = Util.getValue("메뉴 입력 : ", 0, 2,"입력오류");
 			if(sel==0) return;
 			if(sel==1) {
 				cliDAO.inputNewClient();
@@ -83,17 +81,17 @@ public class Bankcontroller {
 			}
 		}
 	}
-	void clientMenuPrint() {
+	private void clientMenuPrint() {
 		System.out.println("[1] 회원가입"); //회원 아이디 중복 금지
 		System.out.println("[2] 로그인");
 		System.out.println("[0] 뒤로가기");
 	}
 	
-	void accountRun() {
+	private void accountRun() {
 		while(true) {
 			System.out.println("==[ "+BANKNAME+" ATM ]==");
 			accountMenuPrint();
-			int sel = util.getValue("메뉴 입력 : ", 0, 7,"입력오류");
+			int sel = Util.getValue("메뉴 입력 : ", 0, 7,"입력오류");
 			if(sel==0) {
 				log = null;
 				return;
@@ -120,7 +118,7 @@ public class Bankcontroller {
 		}
 	}
 	
-	void accountMenuPrint() {
+	private void accountMenuPrint() {
 		System.out.println("[1] 계좌추가"); //계좌 중복 금지 1111-1111-1111 형태만 가능
 		System.out.println("[2] 계좌삭제"); //본인 회원 계좌만 가능
 		System.out.println("[3] 입금"); //본인 계좌번호만 가능 : 100원 이상만 가능

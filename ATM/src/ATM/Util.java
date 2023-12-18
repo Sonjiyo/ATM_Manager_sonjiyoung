@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Util {
-	Scanner sc;
-	final String CUR_PATH = System.getProperty("user.dir") + "\\src\\ATM\\";
+	private static Scanner sc;
+	private static String file_path = System.getProperty("user.dir") + "\\src\\";
+	private static Util util = new Util();
 	
-	Util() {
+	private Util() {
 		sc = new Scanner(System.in);
+		file_path += this.getClass().getPackageName()+"\\";
 	}
 	
-	int getValue(String msg, int start, int end, String errMsg) {
+	public static int getValue(String msg, int start, int end, String errMsg) {
 		int sel = 0;
 		while(true) {
 			System.out.print(msg);
@@ -34,13 +36,13 @@ public class Util {
 		}
 	}
 	
-	String getValue(String msg) {
+	public static String getValue(String msg) {
 		System.out.print(msg);
 		String input = sc.next();
 		return input;
 	}
 	
-	void saveData(AccountDAO accDAO, ClientDAO cliDAO) {
+	public static void saveData(AccountDAO accDAO, ClientDAO cliDAO) {
 		String accData = accDAO.saveAccountData();
 		String cliData = cliDAO.saveClinetData();
 		
@@ -49,8 +51,8 @@ public class Util {
 		System.out.println("[저장 성공]");
 	}
 	
-	void savaAccountData(String fileName, String accData) {
-		File file = new File(CUR_PATH+fileName);
+	public static void savaAccountData(String fileName, String accData) {
+		File file = new File(file_path+fileName);
 		
 		try(FileWriter fw = new FileWriter(file)){
 			fw.write(accData);
@@ -59,8 +61,8 @@ public class Util {
 		}
 	}
 	
-	void savaClientData(String fileName, String cliData) {
-		File file = new File(CUR_PATH+fileName);
+	public static void savaClientData(String fileName, String cliData) {
+		File file = new File(file_path+fileName);
 		
 		try(FileWriter fw = new FileWriter(file)){
 			fw.write(cliData);
@@ -69,8 +71,8 @@ public class Util {
 		}
 	}
 	
-	String loadData(String fileName) {
-		File file = new File(CUR_PATH+fileName);
+	public static String loadData(String fileName) {
+		File file = new File(file_path+fileName);
 		
 		String data = "";
 		try(FileReader fr = new FileReader(file);
@@ -92,7 +94,7 @@ public class Util {
 		return data;
 	}
 	
-	void loadFromFile(AccountDAO accDAO, ClientDAO cliDAO) {
+	public static void loadFromFile(AccountDAO accDAO, ClientDAO cliDAO) {
 		String accData = loadData("account.txt");
 		String cliData = loadData("client.txt");
 		
